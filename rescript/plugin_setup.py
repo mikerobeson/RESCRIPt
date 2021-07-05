@@ -21,6 +21,7 @@ from .screenseq import cull_seqs
 from .degap import degap_seqs
 from .parse_silva_taxonomy import (parse_silva_taxonomy, ALLOWED_RANKS,
                                    DEFAULT_RANKS)
+from .parse_rdp import (parse_rdp, ALLOWED_RDP_RANKS, DEFAULT_RDP_RANKS)
 from .get_data import get_silva_data
 from .cross_validate import (evaluate_cross_validate,
                              evaluate_classifications,
@@ -705,6 +706,41 @@ plugin.methods.register_function(
     citations=[citations['Pruesse2007'],
                citations['Quast2013']]
 )
+
+
+plugin.methods.register_function(
+    function=parse_rdp,
+    inputs={'rdp_reference_sequences': FeatureData[Sequence]},
+    parameters={
+        'rank_propagation': Bool,
+        'ranks': List[Str % Choices(ALLOWED_RDP_RANKS)]
+    },
+    outputs=[('rdp_taxonomy', FeatureData[Taxonomy]),
+             ('rdp_sequences', FeatureData[Sequence])],
+    input_descriptions={
+        'rdp_reference_sequences': '',
+    },
+    parameter_descriptions={
+        'rank_propagation': RANK_PROPAGATE_DESCRIPTION,
+        'ranks': RANK_DESCRIPTION
+    },
+    output_descriptions={
+        'rdp_taxonomy': 'The resulting fixed-rank Ribosomal Database Project '
+        '(RDP) formatted taxonomy.',
+        'rdp_sequences': 'The resulting formatted RDP equences.'
+    },
+    name='Generates an RDP fixed-rank taxonomy.',
+    description=(
+        'Parses several files from the Ribosomal Database Project '
+        '(RDP) reference database to produce a GreenGenes-like fixed rank '
+        'taxonomy. The default generated ranks (and the rank handles used to '
+        'label these ranks in the resulting taxonomy) are: domain (d__), '
+        'phylum (p__), class (c__), subclass (cs_), order (o__), suborder '
+        '(os_), family (f__), and genus (g__).'
+    ),
+    citations=[citations['Cole2009']]
+)
+
 
 
 plugin.methods.register_function(
