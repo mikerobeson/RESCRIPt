@@ -22,7 +22,7 @@ MITO_GENE_LIST = ['A6', 'A8', 'CO1', 'CO2', 'CO3', 'Cytb',
 
 
 def _assemble_midori2_urls(mito_gene,
-                           version='GenBank267_2025-06-19',
+                           version='GenBank270_2026-02-15',
                            ref_seq_type='uniq',
                            unspecified_species=False,
                            ):
@@ -76,8 +76,8 @@ def _retrieve_data_from_midori2(fasta_url, tax_url):
                                       url=url, e=e))
 
             print('  Unzipping {0}...\n'.format(in_path))
-            with gzip.open(in_path, 'rt') as gz_in:
-                with open(out_path, 'w') as gz_out:
+            with gzip.open(in_path, 'rb') as gz_in:
+                with open(out_path, 'wb') as gz_out:
                     shutil.copyfileobj(gz_in, gz_out)
                     if out_path.endswith('fasta'):
                         seqs = DNAFASTAFormat(out_path,
@@ -94,7 +94,7 @@ def _retrieve_data_from_midori2(fasta_url, tax_url):
 #     `--p-search-strings '_\d+(;)|_\d+($)'`.
 def get_midori2_data(
     mito_gene: list,
-    version: str = 'GenBank267_2025-06-19',
+    version: str = 'GenBank270_2026-02-15',
     ref_seq_type: str = 'uniq',
     unspecified_species: bool = False,
         ) -> (DNAIterator, pd.DataFrame):
