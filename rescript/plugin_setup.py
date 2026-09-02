@@ -670,8 +670,9 @@ plugin.methods.register_function(
 
 
 INCLUDE_SPECIES_LABELS_DESCRIPTION = (
-    'Include species rank labels in taxonomy output. Note: species-labels may '
-    'not be reliable in all cases.')
+    'Include \'organism_name\' as the species rank labels in the '
+    'taxonomy output. Note: these \'organism_name\' labels might '
+    'not serve as reliable \'species\' labels in all cases.')
 
 RANK_PROPAGATE_DESCRIPTION = (
     'If a rank has no taxonomy associated with it, the taxonomy from the '
