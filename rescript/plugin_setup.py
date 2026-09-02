@@ -695,7 +695,7 @@ version_map, target_map, _ = TypeMap({
      Str % Choices('SSURef_NR99', 'SSURef', 'LSURef')): Visualization,
     (Str % Choices('138'),
      Str % Choices('SSURef_NR99', 'SSURef')): Visualization,
-    (Str % Choices('138.1', '138.2'),
+    (Str % Choices('138.1', '138.2', '144'),
      Str % Choices('SSURef_NR99', 'SSURef', 'LSURef_NR99',
                    'LSURef')): Visualization,
 })
@@ -707,6 +707,7 @@ plugin.pipelines.register_function(
     parameters={
         'version': version_map,
         'target': target_map,
+        'trunc': Bool,
         'include_species_labels': Bool,
         'rank_propagation': Bool,
         'ranks': List[Str % Choices(ALLOWED_RANKS)],
@@ -720,6 +721,11 @@ plugin.pipelines.register_function(
                   'small subunit reference. LSURef = redundant large subunit '
                   'reference. SSURef_NR99 = non-redundant (clustered at 99% '
                   'similarity) small subunit reference.',
+        'trunc': 'Sequences in these files haven been truncated. Meaning '
+                 'that all nucleotides that have not been aligned were '
+                 'removed from the sequence. Note, not all database '
+                 'versions contain both a truncated and non-truncated '
+                 'reference sequence file.',
         'include_species_labels': INCLUDE_SPECIES_LABELS_DESCRIPTION,
         'rank_propagation': RANK_PROPAGATE_DESCRIPTION,
         'ranks': RANK_DESCRIPTION,

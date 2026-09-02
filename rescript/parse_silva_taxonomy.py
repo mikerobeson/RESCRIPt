@@ -91,7 +91,18 @@ def _get_clean_organism_name(name):
     return _keep_allowed_chars('_'.join(name.strip().split()[:2]))
 
 
+def get_last_taxmap_taxpath_label(tax_string):
+    return tax_string.strip(';').split(';')[-1]
+
+
 def _prep_taxmap(taxmap):
+    # Check if there are any NaNs in organism_name.
+    # If so, pull last taxonomy item from the taxonomy path and use
+    # that for the organism_name.
+    if taxmap.loc[:, 'organism_name'].isna().any():
+        taxmap.loc[:, 'organism_name'] = taxmap.loc[
+            :, 'organism_name'].fillna(taxmap.loc[:, 'path'].apply(
+                get_last_taxmap_taxpath_label))
     # Return silva taxonomy dataframe map indexed by accession.seqtart.seqstop
     # This is how the coreesponding FASTA file IDs are structured
     taxmap.index = taxmap.index + '.' + taxmap.start + '.' + taxmap.stop
