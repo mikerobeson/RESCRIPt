@@ -93,17 +93,10 @@ def _assemble_silva_data_urls(version, target, trunc=True,
         base_url, insert.split('_')[0], version)
 
     # tree & taxonomy urls
-    #  if version 144 or greater:
-    if float(version) >= 144:
-        gz_str = '.gz'
-    else:
-        gz_str = ''
-
-    tree_url = base_url_tax + '.tre' + gz_str
-    tax_url = base_url_tax + '.txt' + gz_str
-
+    tree_url = base_url_tax + '.tre'
+    tax_url = base_url_tax + '.txt'
     # add ".gz" for the following versions:
-    if version in ['138', '138.1', '138.2']:
+    if version in ['138', '138.1', '138.2', '144']:
         tree_url += '.gz'
         tax_url += '.gz'
 
