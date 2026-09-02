@@ -690,16 +690,20 @@ RANK_DESCRIPTION = ('List of taxonomic ranks for building a taxonomy from the '
 _SILVA_VERSIONS = ['128', '132', '138', '138.1', '138.2', '144']
 _SILVA_TARGETS = ['SSURef_NR99', 'SSURef', 'LSURef_NR99', 'LSURef']
 
-version_map, target_map, _ = TypeMap({
+version_map, target_map, trunc_map, _ = TypeMap({
     (Str % Choices('128', '132'),
-     Str % Choices('SSURef_NR99', 'SSURef', 'LSURef')): Visualization,
+     Str % Choices('SSURef_NR99', 'SSURef', 'LSURef'),
+     Bool % Choices([True, False])): Visualization,
     (Str % Choices('138'),
-     Str % Choices('SSURef_NR99', 'SSURef')): Visualization,
+     Str % Choices('SSURef_NR99', 'SSURef'),
+     Bool % Choices([True, False])): Visualization,
     (Str % Choices('138.1', '138.2'),
      Str % Choices('SSURef_NR99', 'SSURef', 'LSURef_NR99',
-                   'LSURef')): Visualization,
+                   'LSURef'),
+     Bool % Choices([True, False])): Visualization,
     (Str % Choices('144'),
-     Str % Choices('SSURef_NR99', 'SSURef')): Visualization,
+     Str % Choices('SSURef_NR99', 'SSURef'),
+     Bool % Choices([True])): Visualization,
 })
 
 
@@ -709,7 +713,7 @@ plugin.pipelines.register_function(
     parameters={
         'version': version_map,
         'target': target_map,
-        'trunc': Bool,
+        'trunc': trunc_map,
         'include_species_labels': Bool,
         'rank_propagation': Bool,
         'ranks': List[Str % Choices(ALLOWED_RANKS)],
