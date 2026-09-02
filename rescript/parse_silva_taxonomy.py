@@ -103,10 +103,6 @@ def _prep_taxmap(taxmap):
     taxmap['organism_name'] = np.where(
         taxmap['organism_name'].isna(), taxmap['path'].apply(
                 get_last_taxmap_taxpath_label), taxmap['organism_name'])
-    # if taxmap.loc[:, 'organism_name'].isna().any():
-    #    taxmap.loc[:, 'organism_name'] = taxmap.loc[
-    #        :, 'organism_name'].fillna(taxmap.loc[:, 'path'].apply(
-    #            get_last_taxmap_taxpath_label))
     # Return silva taxonomy dataframe map indexed by accession.seqtart.seqstop
     # This is how the coreesponding FASTA file IDs are structured
     taxmap.index = taxmap.index + '.' + taxmap.start + '.' + taxmap.stop
