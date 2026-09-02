@@ -81,8 +81,17 @@ def _assemble_silva_data_urls(version, target, trunc=True,
     base_url_seqs = base_url + 'SILVA_{0}_{1}_tax_silva{2}.fasta.gz'.format(
             version, target, ts)
 
-    base_url_taxmap = '{0}taxonomy/taxmap_slv_{1}_{2}'.format(
-        base_url, insert, version)
+    # SILVA 144 taxmap file schema has changed to
+    # `taxmap_slv_ssu_ref144.txt.gz`
+    # Prior versions of silva have always been in the form of:
+    #  `taxmap_slv_ssu_ref_144.txt.gz`
+    if target == 'SSURef' and float(version) >= 144:
+        under = ''
+    else:
+        under = '_'
+
+    base_url_taxmap = '{0}taxonomy/taxmap_slv_{1}{2}{3}'.format(
+        base_url, insert, under, version)
 
     # More SILVA release inconsistencies
     if target == 'SSURef' and version == '132':
