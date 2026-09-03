@@ -93,7 +93,7 @@ def _get_clean_organism_name(name):
 
 
 def get_last_taxmap_taxpath_label(tax_string):
-    return tax_string.strip(';').split(';')[-1]
+    return 'unknown_' + tax_string.strip(';').split(';')[-1]
 
 
 def _prep_taxmap(taxmap):
