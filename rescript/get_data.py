@@ -22,14 +22,13 @@ from q2_types.feature_data import RNAFASTAFormat
 def get_silva_data(ctx,
                    version='144',
                    target='SSURef_NR99',
-                   trunc=True,
                    include_species_labels=False,
                    rank_propagation=True,
                    ranks=None,
                    download_sequences=True):
     # download data from SILVA
     print('Downloading raw files may take some time... get some coffee.')
-    queries = _assemble_silva_data_urls(version, target, trunc,
+    queries = _assemble_silva_data_urls(version, target,
                                         download_sequences)
     results = _retrieve_data_from_silva(queries)
     # parse taxonomy
@@ -48,7 +47,7 @@ def get_silva_data(ctx,
     return results['sequences'], taxonomy
 
 
-def _assemble_silva_data_urls(version, target, trunc=True,
+def _assemble_silva_data_urls(version, target,
                               download_sequences=True):
     '''Generate SILVA urls, given database version and reference target.'''
     # assemble target urls
@@ -73,13 +72,8 @@ def _assemble_silva_data_urls(version, target, trunc=True,
     # if we find more inconsistencies.
 
     # construct file urls
-    if trunc:
-        ts = '_trunc'
-    else:
-        ts = ''
-
-    base_url_seqs = base_url + 'SILVA_{0}_{1}_tax_silva{2}.fasta.gz'.format(
-            version, target, ts)
+    base_url_seqs = base_url + 'SILVA_{0}_{1}_tax_silva_trunc.fasta.gz'.format(
+            version, target)
 
     # SILVA 144 taxmap file schema has changed to
     # `taxmap_slv_ssu_ref144.txt.gz`
