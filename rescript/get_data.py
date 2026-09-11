@@ -58,7 +58,7 @@ def get_silva_data(ctx,
     return results['sequences'], results['aligned sequences'], taxonomy
 
 
-def _assemble_silva_data_urls(version, target, seq_format): # download_sequences=True
+def _assemble_silva_data_urls(version, target, seq_format):
     '''Generate SILVA urls, given database version and reference target.'''
     # assemble target urls
     ref_map = {'SSURef_NR99': 'ssu_ref_nr',
@@ -85,8 +85,8 @@ def _assemble_silva_data_urls(version, target, seq_format): # download_sequences
     base_url_seqs = base_url + 'SILVA_{0}_{1}_tax_silva_trunc.fasta.gz'.format(
         version, target)
     base_url_seqs_aln = base_url + \
-         'SILVA_{0}_{1}_tax_silva_full_align_trunc.fasta.gz'.format(
-         version, target)
+        'SILVA_{0}_{1}_tax_silva_full_align_trunc.fasta.gz'.format(
+            version, target)
     base_url_taxmap = '{0}taxonomy/taxmap_slv_{1}_{2}'.format(
         base_url, insert, version)
 
@@ -106,7 +106,8 @@ def _assemble_silva_data_urls(version, target, seq_format): # download_sequences
         tax_url += '.gz'
 
     # download and validate silva files
-    queries = [('aligned sequences', base_url_seqs_aln, 'FeatureData[AlignedRNASequence]'),
+    queries = [('aligned sequences', base_url_seqs_aln,
+                'FeatureData[AlignedRNASequence]'),
                ('sequences', base_url_seqs, 'FeatureData[RNASequence]'),
                ('taxonomy map', base_url_taxmap, 'FeatureData[SILVATaxidMap]'),
                ('taxonomy tree', tree_url, 'Phylogeny[Rooted]'),

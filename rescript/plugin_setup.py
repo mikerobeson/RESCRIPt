@@ -711,7 +711,6 @@ plugin.pipelines.register_function(
         'rank_propagation': Bool,
         'ranks': List[Str % Choices(ALLOWED_RANKS)],
         'seq_format': Str % Choices(['Aligned', 'Unaligned', 'Both', 'None'])
-        #'download_sequences': Bool
         },
     outputs=[('silva_sequences', FeatureData[RNASequence]),
              ('silva_sequences_aligned', FeatureData[AlignedRNASequence]),
@@ -729,7 +728,7 @@ plugin.pipelines.register_function(
         'seq_format': 'Select the format of sequence data to be downlaoded. '
                       'Choose \'Both\' to download the aligned and unaliged '
                       'sequenced data. Choose \'None\' if no sequence data '
-                      'should be downlaoded',
+                      'should be downlaoded.',
                               },
     output_descriptions={
         'silva_sequences': 'SILVA reference sequences.',
