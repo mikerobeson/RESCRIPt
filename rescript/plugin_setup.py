@@ -710,8 +710,11 @@ plugin.pipelines.register_function(
         'include_species_labels': Bool,
         'rank_propagation': Bool,
         'ranks': List[Str % Choices(ALLOWED_RANKS)],
-        'download_sequences': Bool},
+        'seq_format': Str % Choices(['Aligned', 'Unaligned', 'Both', 'None'])
+        #'download_sequences': Bool
+        },
     outputs=[('silva_sequences', FeatureData[RNASequence]),
+             ('silva_sequences_aligned', FeatureData[AlignedRNASequence]),
              ('silva_taxonomy', FeatureData[Taxonomy])],
     input_descriptions={},
     parameter_descriptions={
@@ -723,17 +726,14 @@ plugin.pipelines.register_function(
         'include_species_labels': INCLUDE_SPECIES_LABELS_DESCRIPTION,
         'rank_propagation': RANK_PROPAGATE_DESCRIPTION,
         'ranks': RANK_DESCRIPTION,
-        'download_sequences': 'Toggle whether or not to download and import '
-                              'the SILVA reference sequences associated with '
-                              'the release. Skipping the sequences is useful '
-                              'if you only want to download and parse the '
-                              'taxonomy, e.g., a local copy of the sequences '
-                              'already exists or for testing purposes. NOTE: '
-                              'if this option is used, a `silva_sequences` '
-                              'output is still created, but contains no '
-                              'data.'},
+        'seq_format': 'Select the format of sequence data to be downlaoded. '
+                      'Choose \'Both\' to download the aligned and unaliged '
+                      'sequenced data. Choose \'None\' if no sequence data '
+                      'should be downlaoded',
+                              },
     output_descriptions={
         'silva_sequences': 'SILVA reference sequences.',
+        'silva_sequences_aligned': 'SILVA reference sequences, aligned.',
         'silva_taxonomy': 'SILVA reference taxonomy.'},
     name='Download, parse, and import SILVA database.',
     description=(
