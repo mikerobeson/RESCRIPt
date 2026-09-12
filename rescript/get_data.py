@@ -42,19 +42,12 @@ def get_silva_data(ctx,
         ranks=ranks,
         rank_propagation=rank_propagation)
     # if skipping sequences, need to output an empty sequence file.
-    if seq_format == 'None':
-        results['sequences'] = qiime2.Artifact.import_data(
-            'FeatureData[RNASequence]', RNAFASTAFormat())
+    if seq_format == 'Unaligned' or seq_format == 'None':
         results['aligned sequences'] = qiime2.Artifact.import_data(
             'FeatureData[AlignedRNASequence]', AlignedRNAFASTAFormat())
-    if seq_format == 'Unaligned':
-        results['aligned sequences'] = qiime2.Artifact.import_data(
-            'FeatureData[AlignedRNASequence]', AlignedRNAFASTAFormat())
-    if seq_format == 'Aligned':
+    if seq_format == 'Aligned' or seq_format == 'None':
         results['sequences'] = qiime2.Artifact.import_data(
             'FeatureData[RNASequence]', RNAFASTAFormat())
-    # else:
-    #     seq_res = {k: results[k] for k in ['sequences', 'sequences_aligned']}
     return results['sequences'], results['aligned sequences'], taxonomy
 
 
